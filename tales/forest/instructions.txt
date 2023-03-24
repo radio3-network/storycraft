@@ -1,0 +1,134 @@
+StoryCraft
+==========
+
+An engine for text games focused on story tales.
+
+
+To create a new story you use text files which
+follow a simple syntax. The simplicity of text
+files permits you to play from any kind of
+machine.
+
+From old 80s computers to modern web browsers
+and just about anything else in between. One
+of the nice features is to permit multiplayer
+games across the internet.
+
+
+For now just focus on writing tales, have fun! :-)
+
+-----------------------
+
+#Syntax
+
+
+## File names and folders
+
+Every file uses the extension .tale to know that
+it belongs to the game. You can place them in any
+subfolders to help organizing, just remember to
+always use slashes in unix-style to mention them.
+
+For example:
+'''
+rooms/castle_wolf.tale
+'''
+
+
+# Actions
+
+Specific activities that give life to the game
+
+
+## wait
+
+Waits for a specific number of seconds to create
+suspense before the next action takes place.
+
+Example:
+'''
+wait 10
+'''
+
+
+## open
+
+Opens a specific location tale.
+
+Starts running all the commands from the beginning
+of the file until the end.
+
+'''
+open castle-blue.tale
+open bonus/hidden-cave1.tale
+'''
+
+
+## options
+
+Adds options to the command that will run next.
+
+The type of options depends on the command.
+
+An option consists of a KEY=VALUE statement.
+Multiple options are separated by spaces.
+
+
+## story
+
+Tells a short story to the user. this text can
+be displayed progressively depending on the options.
+
+'''
+options letter_speed=0.2
+story Once upon a time there was a princess on a far.. far.. far kingdom (...)
+'''
+
+Options this command:
++ letter_speed: how fast each letter is displayed in seconds
++ pause_after_space: defines seconds for pausing after each space letter
+
+
+
+
+
+-----------------------
+
+# Example of a tale
+
+
+tag start
+choose forest return
+
+tag forest
+// define the options
+options letter_speed=0.2
+story You are now walking on the forest
+
+// action that happens randomly
+random 80% fight; 15% lucky; 5% extra
+
+// loop back to start
+play start
+
+tag fight
+story You found a troll!
+// other actions happen here
+play start
+
+
+tag lucky
+story You found a bonus!
+// other actions happen here
+play start
+
+
+
+// last tag, returns to the previous tale
+tag return
+
+
+
+
+
+

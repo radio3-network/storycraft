@@ -1,0 +1,94 @@
+
+// long term user variables
+remember gold 0
+remember life 50
+remember level 1
+remember fights 0
+
+
+tag start
+
+clear
+// tell the story with options
+story You are now walking inside the forest
+options letter_speed=0.2
+
+// choices for the user
+choose forest exit
+
+
+tag forest
+// action that happens randomly
+destiny 80%fight 15%lucky 5%extra
+
+// loop back to start
+play start
+
+
+tag fight
+clear
+var troll_life 20
+story You found a troll!!
+text Troll life: #troll_life
+
+
+tag fight_action
+// 50% chance to win or lose
+destiny attack_win attack_lose
+choose fight_action fight_avoid
+
+tag fight_avoid
+play start
+
+
+// continue fighting
+play fight_action
+
+
+// won the fight
+tag fight_win
+increase fights 1
+random prize 10 50
+increase gold prize
+
+text You won this fight and got #prize gold coins!
+keypress OR wait 5
+play start
+
+
+// won the attack
+tag attack_win
+random_decrease troll_life 5 10
+text Attack was effective
+line
+text Enemy life: #troll_life
+if troll_life < 0 then play fight_win
+// continue fighting
+play fight_action
+
+// lost the attack
+tag attack_lose
+random_decrease life 5 10
+if life < 0 then play game_over
+// continue fighting
+play fight_action
+
+
+// still alive?
+play start
+
+
+tag lucky
+story You found a bonus!
+// other actions happen here
+play start
+
+
+tag game_over
+increase fights 1
+story That last attack got you! So finishes this tale. We hope you had fun!
+options letter_speed=0.2
+
+
+// last tag, returns to the previous tale
+tag exit
